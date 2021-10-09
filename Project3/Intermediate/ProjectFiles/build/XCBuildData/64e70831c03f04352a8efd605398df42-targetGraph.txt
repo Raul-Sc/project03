@@ -1,4 +1,0 @@
-Target dependency graph (2 targets)
-Project3_Build in Project3
-Project3 in Project3, depends on:
-Project3_Build in Project3 (explicit)
