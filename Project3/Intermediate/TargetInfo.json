@@ -2,12 +2,20 @@
 	"Targets": [
 		{
 			"Name": "Project3",
+<<<<<<< HEAD
 			"Path": "/Users/home/Desktop/Fall 21/426/project03/Project3/Source/Project3.Target.cs",
+=======
+			"Path": "C:\\Users\\raul\\Desktop\\project03\\Project3\\Source\\Project3.Target.cs",
+>>>>>>> 47a5a856779016a8f5d6d64b66e6c4d97b7e067c
 			"Type": "Game"
 		},
 		{
 			"Name": "Project3Editor",
+<<<<<<< HEAD
 			"Path": "/Users/home/Desktop/Fall 21/426/project03/Project3/Source/Project3Editor.Target.cs",
+=======
+			"Path": "C:\\Users\\raul\\Desktop\\project03\\Project3\\Source\\Project3Editor.Target.cs",
+>>>>>>> 47a5a856779016a8f5d6d64b66e6c4d97b7e067c
 			"Type": "Editor"
 		}
 	]
