@@ -2,12 +2,12 @@
 	"Targets": [
 		{
 			"Name": "Project3",
-			"Path": "/Users/home/Desktop/Project3/Source/Project3.Target.cs",
+			"Path": "/Users/home/Desktop/Fall 21/426/project03/Project3/Source/Project3.Target.cs",
 			"Type": "Game"
 		},
 		{
 			"Name": "Project3Editor",
-			"Path": "/Users/home/Desktop/Project3/Source/Project3Editor.Target.cs",
+			"Path": "/Users/home/Desktop/Fall 21/426/project03/Project3/Source/Project3Editor.Target.cs",
 			"Type": "Editor"
 		}
 	]
