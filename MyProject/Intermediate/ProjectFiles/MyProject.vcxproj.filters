@@ -3,7 +3,7 @@
   <ItemGroup>
     <None Include="..\..\MyProject.uproject" />
     <Filter Include="Source">
-      <UniqueIdentifier>{5F13AA06-4360-4459-97B3-4A96B3A50FB7}</UniqueIdentifier>
+      <UniqueIdentifier>{36F643B7-F786-471E-9D73-5B5F3CB7412B}</UniqueIdentifier>
     </Filter>
     <None Include="..\..\Source\MyProject.Target.cs">
       <Filter>Source</Filter>
@@ -12,7 +12,7 @@
       <Filter>Source</Filter>
     </None>
     <Filter Include="Config">
-      <UniqueIdentifier>{A12CFDF8-5CDB-4CCB-AF3C-537F64185231}</UniqueIdentifier>
+      <UniqueIdentifier>{73803DAE-02DF-4829-8073-DED610205F2A}</UniqueIdentifier>
     </Filter>
     <None Include="..\..\Config\DefaultEditor.ini">
       <Filter>Config</Filter>
@@ -27,7 +27,7 @@
       <Filter>Config</Filter>
     </None>
     <Filter Include="Source\MyProject">
-      <UniqueIdentifier>{3CA7DE4E-442C-49DA-9F54-B4C3E284BF96}</UniqueIdentifier>
+      <UniqueIdentifier>{33D677AD-19ED-4DAA-93F3-A44ADB1EE7DC}</UniqueIdentifier>
     </Filter>
     <ClCompile Include="..\..\Source\MyProject\Enemy.cpp">
       <Filter>Source\MyProject</Filter>
@@ -60,6 +60,12 @@
       <Filter>Source\MyProject</Filter>
     </ClCompile>
     <ClInclude Include="..\..\Source\MyProject\MyProjectGameModeBase.h">
+      <Filter>Source\MyProject</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\MyProject\Robot.cpp">
+      <Filter>Source\MyProject</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\MyProject\Robot.h">
       <Filter>Source\MyProject</Filter>
     </ClInclude>
   </ItemGroup>
