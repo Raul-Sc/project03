@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
 
+#include "Components/SkeletalMeshComponent.h"
 #include "GameFramework/FloatingPawnMovement.h"
 
 #include "MyPawn.generated.h"
@@ -29,6 +30,11 @@ protected:
 	UPROPERTY(EditAnywhere)
 	UFloatingPawnMovement* FMove;
 
+	bool bCanMove;
+
+
+	
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -38,6 +44,9 @@ public:
 
 	void MoveX(float Axis);
 	void MoveY(float Axis);
+
+	UFUNCTION(BlueprintCallable, Category = Movement)
+		void setCanMove();
 	
 
 };

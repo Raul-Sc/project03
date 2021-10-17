@@ -13,9 +13,12 @@ AMyPawn::AMyPawn()
 	RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("RootComponent"));
 
 	MeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("MeshComponent"));
+
 	MeshComponent->SetupAttachment(RootComponent);
 
 	 FMove = CreateDefaultSubobject<UFloatingPawnMovement>(TEXT("FloatingMovement"));
+	
+	 bCanMove = true;
 
 }
 
@@ -53,9 +56,15 @@ void AMyPawn::MoveX(float Axis)
 }
 void AMyPawn::MoveY(float Axis)
 {
-	const FRotator Rotation = Controller->GetControlRotation();
-	const FRotator YawRotation(0, Rotation.Yaw, 0);
+	if (bCanMove) {
+		const FRotator Rotation = Controller->GetControlRotation();
+		const FRotator YawRotation(0, Rotation.Yaw, 0);
 
-	const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
-	AddMovementInput(Direction, Axis);
+		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
+		AddMovementInput(Direction, Axis);
+	}
+}
+void AMyPawn::setCanMove()
+{
+	bCanMove = false;
 }
