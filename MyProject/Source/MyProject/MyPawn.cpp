@@ -29,6 +29,30 @@ void AMyPawn::BeginPlay()
 	
 }
 
+void AMyPawn::RayCast()
+{
+	FVector start = GetRootComponent()->GetComponentLocation();
+	start.Z /= 2;
+	const FRotator Rotation = Controller->GetControlRotation();
+	const FRotator YawRotation(0, Rotation.Yaw, 0);
+
+
+	FVector end = start + ( FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X) * 200);
+	end.Z = 0;
+	//GEngine->AddOnScreenDebugMessage(0, 5.0f, FColor::Yellow, FString::Printf(TEXT("%s"), *start.ToString()));
+	DrawDebugLine(GetWorld(), start,end, FColor::Yellow, false, (2, 0, 1));
+
+	FCollisionQueryParams collisionParams;
+	collisionParams.AddIgnoredActor(this);
+	FHitResult outHit;
+	bool isHit = GetWorld()->LineTraceSingleByChannel(outHit, start, end, ECC_Visibility, collisionParams);
+	if (isHit) {
+		FVector normal = outHit.Normal;
+		GEngine->AddOnScreenDebugMessage(0, 5.0f, FColor::Yellow, FString::Printf(TEXT("%s"),  *normal.ToString()  ));
+	}
+
+}
+
 // Called every frame
 void AMyPawn::Tick(float DeltaTime)
 {
@@ -40,22 +64,14 @@ void AMyPawn::Tick(float DeltaTime)
 void AMyPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
-	InputComponent->BindAxis("MoveX", this, &AMyPawn::MoveY);
-	InputComponent->BindAxis("MoveY",this, &AMyPawn::MoveX);
+	InputComponent->BindAxis("MoveX", this, &AMyPawn::MoveX);
+	InputComponent->BindAxis("MoveY",this, &AMyPawn::MoveY);
 	InputComponent->BindAxis("Turn", this, &AMyPawn::AddControllerYawInput);
 
 }
 void AMyPawn::MoveX(float Axis)
 {
-	//CurrentVelocity.X = FMath::Clamp(Axis, -1.0f, 1.0f) * speed;
-	const FRotator Rotation = Controller->GetControlRotation();
-	const FRotator YawRotation(0, Rotation.Yaw, 0);
-
-	const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
-	AddMovementInput(Direction, Axis);
-}
-void AMyPawn::MoveY(float Axis)
-{
+	RayCast();
 	if (bCanMove) {
 		const FRotator Rotation = Controller->GetControlRotation();
 		const FRotator YawRotation(0, Rotation.Yaw, 0);
@@ -64,7 +80,18 @@ void AMyPawn::MoveY(float Axis)
 		AddMovementInput(Direction, Axis);
 	}
 }
+void AMyPawn::MoveY(float Axis)
+{
+	RayCast();
+	if (bCanMove) {
+		const FRotator Rotation = Controller->GetControlRotation();
+		const FRotator YawRotation(0, Rotation.Yaw, 0);
+
+		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
+		AddMovementInput(Direction, Axis);
+	}
+}
 void AMyPawn::setCanMove()
 {
-	bCanMove = false;
+	//bCanMove = false;
 }

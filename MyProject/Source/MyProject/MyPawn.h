@@ -7,6 +7,7 @@
 
 #include "Components/SkeletalMeshComponent.h"
 #include "GameFramework/FloatingPawnMovement.h"
+#include "DrawDebugHelpers.h"
 
 #include "MyPawn.generated.h"
 
@@ -32,6 +33,7 @@ protected:
 
 	bool bCanMove;
 
+	void RayCast();
 
 	
 

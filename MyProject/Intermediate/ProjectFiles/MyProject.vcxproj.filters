@@ -68,5 +68,6 @@
     <ClInclude Include="..\..\Source\MyProject\Robot.h">
       <Filter>Source\MyProject</Filter>
     </ClInclude>
+    <None Include="cpp.hint" />
   </ItemGroup>
 </Project>
