@@ -9,6 +9,7 @@
 #include "GameFramework/FloatingPawnMovement.h"
 #include "DrawDebugHelpers.h"
 
+
 #include "MyPawn.generated.h"
 
 UCLASS()
@@ -33,7 +34,9 @@ protected:
 
 	bool bCanMove;
 
-	void RayCast();
+	void setHeight();
+
+	FHitResult RayCast();
 
 	
 

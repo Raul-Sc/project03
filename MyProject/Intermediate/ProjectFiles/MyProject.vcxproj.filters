@@ -3,7 +3,7 @@
   <ItemGroup>
     <None Include="..\..\MyProject.uproject" />
     <Filter Include="Source">
-      <UniqueIdentifier>{36F643B7-F786-471E-9D73-5B5F3CB7412B}</UniqueIdentifier>
+      <UniqueIdentifier>{485D3B14-934B-41E4-A6C9-21F8C328A3BD}</UniqueIdentifier>
     </Filter>
     <None Include="..\..\Source\MyProject.Target.cs">
       <Filter>Source</Filter>
@@ -12,7 +12,7 @@
       <Filter>Source</Filter>
     </None>
     <Filter Include="Config">
-      <UniqueIdentifier>{73803DAE-02DF-4829-8073-DED610205F2A}</UniqueIdentifier>
+      <UniqueIdentifier>{48BF78B6-A0F9-4164-9279-E49E4C5FE697}</UniqueIdentifier>
     </Filter>
     <None Include="..\..\Config\DefaultEditor.ini">
       <Filter>Config</Filter>
@@ -27,7 +27,7 @@
       <Filter>Config</Filter>
     </None>
     <Filter Include="Source\MyProject">
-      <UniqueIdentifier>{33D677AD-19ED-4DAA-93F3-A44ADB1EE7DC}</UniqueIdentifier>
+      <UniqueIdentifier>{372A62DF-21A6-4A9F-8B16-8E6E562D9B4D}</UniqueIdentifier>
     </Filter>
     <ClCompile Include="..\..\Source\MyProject\Enemy.cpp">
       <Filter>Source\MyProject</Filter>
@@ -68,6 +68,5 @@
     <ClInclude Include="..\..\Source\MyProject\Robot.h">
       <Filter>Source\MyProject</Filter>
     </ClInclude>
-    <None Include="cpp.hint" />
   </ItemGroup>
 </Project>
