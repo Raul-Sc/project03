@@ -47,26 +47,31 @@ void AMyPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	InputComponent->BindAxis("MoveX", this, &AMyPawn::MoveX);
 	InputComponent->BindAxis("MoveY",this, &AMyPawn::MoveY);
 	InputComponent->BindAxis("Turn", this, &AMyPawn::AddControllerYawInput);
-//	InputComponent->BindAction("RayCast", IE_Pressed, this, &AMyPawn::Ray);
+
 
 }
-void AMyPawn::setHeight() {
-	FHitResult hit = RayCast();
+void AMyPawn::setHeight(float dir,char rot) {
+	if (dir == 0) return;
+	FHitResult hit = RayCast(dir,rot);
 	float height = hit.Location.Z;
 	FVector newloc = GetActorLocation();
 	newloc.Z = height + 50;
 	SetActorLocation(newloc);
 }
-FHitResult AMyPawn::RayCast()
+FHitResult AMyPawn::RayCast(float dir,char rot)
 {
 	FVector start = GetActorLocation();
 	const FRotator Rotation = Controller->GetControlRotation();
 	const FRotator YawRotation(0, Rotation.Yaw, 0);
+	FVector end;
+	if(rot == 'f')
+		 end = start + (FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X) * 200 * dir);
+	else 
+		end = start + (FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y) * 200 * dir);
+	end.Z = (start.Z - 200);
+	
 
-
-	FVector end = start + (FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X) * 200);
-	end.Z = -20;
-
+	
 	//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, FString::Printf(TEXT("Start%s"), *start.ToString()));
 	DrawDebugLine(GetWorld(), start, end, FColor::Yellow, false, (0, 0, 1));
 
@@ -86,12 +91,11 @@ FHitResult AMyPawn::RayCast()
 
 void AMyPawn::MoveX(float Axis)
 {
-
+	
 	if (bCanMove) {
-
+		setHeight(Axis, 'l');
 		const FRotator Rotation = Controller->GetControlRotation();
 		const FRotator YawRotation(0, Rotation.Yaw, 0);
-
 		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
 		AddMovementInput(Direction, Axis);
 	}
@@ -99,13 +103,12 @@ void AMyPawn::MoveX(float Axis)
 void AMyPawn::MoveY(float Axis)
 {
 
-	if (bCanMove) {
 
+	if (bCanMove) {
+		setHeight(Axis, 'f');
 		const FRotator Rotation = Controller->GetControlRotation();
 		const FRotator YawRotation(0, Rotation.Yaw, 0);
-
 		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
-		setHeight();
 		AddMovementInput(Direction, Axis);
 	}
 }
