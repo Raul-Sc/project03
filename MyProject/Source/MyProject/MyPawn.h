@@ -35,6 +35,7 @@ protected:
 	bool bCanMove;
 
 	void setHeight(float dir,char rot);
+	void setOrientation();
 
 	FHitResult RayCast(float dir,char rot);
 

@@ -26,6 +26,7 @@ AMyPawn::AMyPawn()
 void AMyPawn::BeginPlay()
 {
 	Super::BeginPlay();
+	setOrientation();
 	
 }
 
@@ -36,7 +37,6 @@ void AMyPawn::BeginPlay()
 void AMyPawn::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 
 }
 
@@ -55,8 +55,22 @@ void AMyPawn::setHeight(float dir,char rot) {
 	FHitResult hit = RayCast(dir,rot);
 	float height = hit.Location.Z;
 	FVector newloc = GetActorLocation();
-	newloc.Z = height + 50;
+	newloc.Z = height + 60;
 	SetActorLocation(newloc);
+}
+void AMyPawn::setOrientation() {
+	FHitResult front = RayCast(1, 'f');
+	FHitResult back = RayCast(-1, 'f');
+	FHitResult left = RayCast(-1, 'l');
+	FHitResult right = RayCast(1, 'l');
+
+	float rise = front.Location.Z - back.Location.Z;
+	float run = front.Location.X - back.Location.X;
+	float angle = FMath::Atan(rise / run) * 57.2957795;
+	
+	FQuat rot = FQuat(FRotator(angle, Controller->GetControlRotation().Yaw, Controller->GetControlRotation().Roll));
+	SetActorRotation(rot, ETeleportType::None);
+	GEngine->AddOnScreenDebugMessage(0, 5.0f, FColor::Yellow, FString::Printf(TEXT("PITCH:%f"), angle));
 }
 FHitResult AMyPawn::RayCast(float dir,char rot)
 {
@@ -82,10 +96,7 @@ FHitResult AMyPawn::RayCast(float dir,char rot)
 
 	FHitResult outHit;
 	bool isHit = GetWorld()->LineTraceSingleByChannel(outHit, start, end, ECC_Visibility, collisionParams);
-	if (isHit) {
-		FVector normal = outHit.Normal;
-		GEngine->AddOnScreenDebugMessage(0, 5.0f, FColor::Yellow, (TEXT("%s"), *normal.ToString()));
-	}
+	
 	return outHit;
 }
 
@@ -94,6 +105,7 @@ void AMyPawn::MoveX(float Axis)
 	
 	if (bCanMove) {
 		setHeight(Axis, 'l');
+		setOrientation();
 		const FRotator Rotation = Controller->GetControlRotation();
 		const FRotator YawRotation(0, Rotation.Yaw, 0);
 		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
@@ -106,6 +118,7 @@ void AMyPawn::MoveY(float Axis)
 
 	if (bCanMove) {
 		setHeight(Axis, 'f');
+		setOrientation();
 		const FRotator Rotation = Controller->GetControlRotation();
 		const FRotator YawRotation(0, Rotation.Yaw, 0);
 		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
