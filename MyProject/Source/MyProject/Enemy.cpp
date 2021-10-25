@@ -7,5 +7,5 @@
 
 void AEnemy::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
-	MoveX(1);
+
 }

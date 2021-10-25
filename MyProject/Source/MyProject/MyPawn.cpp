@@ -92,7 +92,7 @@ FHitResult AMyPawn::RayCast(float dir,char rot)
 	FCollisionQueryParams collisionParams;
 	collisionParams.AddIgnoredActor(this);
 	collisionParams.bFindInitialOverlaps = true;
-	collisionParams.bTraceComplex = true;
+	collisionParams.bTraceComplex = false;
 
 	FHitResult outHit;
 	bool isHit = GetWorld()->LineTraceSingleByChannel(outHit, start, end, ECC_Visibility, collisionParams);
