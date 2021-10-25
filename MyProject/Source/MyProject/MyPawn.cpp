@@ -18,7 +18,7 @@ AMyPawn::AMyPawn()
 
 	 FMove = CreateDefaultSubobject<UFloatingPawnMovement>(TEXT("FloatingMovement"));
 	
-	 bCanMove = true;
+	 bCanMove = false;
 
 }
 
@@ -26,7 +26,7 @@ AMyPawn::AMyPawn()
 void AMyPawn::BeginPlay()
 {
 	Super::BeginPlay();
-	setOrientation();
+	//setOrientation();
 	
 }
 

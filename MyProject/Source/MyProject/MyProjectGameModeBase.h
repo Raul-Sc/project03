@@ -4,6 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/GameModeBase.h"
+
+#include "Robot.h"
+#include "Enemy.h"
+
+
 #include "MyProjectGameModeBase.generated.h"
 
 /**
@@ -13,8 +18,16 @@ UCLASS()
 class MYPROJECT_API AMyProjectGameModeBase : public AGameModeBase
 {
 	GENERATED_BODY()
-		virtual void StartPlay() override;
+		
 
-
+private:
+	UPROPERTY(EditAnywhere,category=ThingsToSpawn)
+		TSubclassOf<class ARobot> mainPlayer;
+	UPROPERTY(EditAnywhere, category = ThingsToSpawn)
+		TSubclassOf<class AEnemy> mainBoss;
+	ARobot* player;
+	AEnemy* enemy;
+	virtual void StartPlay() override;
+	void SpawnStuff();
 	
 };
