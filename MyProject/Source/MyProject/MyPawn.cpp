@@ -26,7 +26,7 @@ AMyPawn::AMyPawn()
 void AMyPawn::BeginPlay()
 {
 	Super::BeginPlay();
-	setOrientation();
+	//setOrientation();
 	
 }
 
@@ -59,18 +59,30 @@ void AMyPawn::setHeight(float dir,char rot) {
 	SetActorLocation(newloc);
 }
 void AMyPawn::setOrientation() {
+
+	float Yawangle = Controller->GetControlRotation().Yaw;
+	float Pitchangle = Controller->GetControlRotation().Pitch;
+	float Rollangle = Controller->GetControlRotation().Roll;
+
 	FHitResult front = RayCast(1, 'f');
 	FHitResult back = RayCast(-1, 'f');
 	FHitResult left = RayCast(-1, 'l');
 	FHitResult right = RayCast(1, 'l');
-
+	
 	float rise = front.Location.Z - back.Location.Z;
 	float run = front.Location.X - back.Location.X;
-	float angle = FMath::Atan(rise / run) * 57.2957795;
+	//Pitchangle = FMath::Atan(rise / run) * 57.2957795; //constant conversion rad to angle
+	rise = right.Location.Z - left.Location.Z;
+	run = right.Location.Y- left.Location.Y;
+
+	Rollangle = FMath::Atan(rise / run)* 57.2957795;
+	if (Yawangle > 180)
+		Rollangle *= -1;
+
+	 FQuat rot = FQuat(FRotator(Pitchangle, Yawangle, Rollangle));
 	
-	FQuat rot = FQuat(FRotator(angle, Controller->GetControlRotation().Yaw, Controller->GetControlRotation().Roll));
 	SetActorRotation(rot, ETeleportType::None);
-	GEngine->AddOnScreenDebugMessage(0, 5.0f, FColor::Yellow, FString::Printf(TEXT("PITCH:%f"), angle));
+	GEngine->AddOnScreenDebugMessage(0, 5.0f, FColor::Yellow, FString::Printf(TEXT("%f"), Rollangle));
 }
 FHitResult AMyPawn::RayCast(float dir,char rot)
 {
@@ -96,6 +108,9 @@ FHitResult AMyPawn::RayCast(float dir,char rot)
 
 	FHitResult outHit;
 	bool isHit = GetWorld()->LineTraceSingleByChannel(outHit, start, end, ECC_Visibility, collisionParams);
+	if (isHit) {
+		//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, FString::Printf(TEXT("Start%s"),   ) ));
+	}
 	
 	return outHit;
 }
@@ -105,7 +120,7 @@ void AMyPawn::MoveX(float Axis)
 	
 	if (bCanMove) {
 		setHeight(Axis, 'l');
-		setOrientation();
+		//setOrientation();
 		const FRotator Rotation = Controller->GetControlRotation();
 		const FRotator YawRotation(0, Rotation.Yaw, 0);
 		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
@@ -118,7 +133,7 @@ void AMyPawn::MoveY(float Axis)
 
 	if (bCanMove) {
 		setHeight(Axis, 'f');
-		setOrientation();
+		//setOrientation();
 		const FRotator Rotation = Controller->GetControlRotation();
 		const FRotator YawRotation(0, Rotation.Yaw, 0);
 		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
