@@ -30,8 +30,11 @@ public:
 		USceneComponent* MeshComponent;
 	UPROPERTY(EditAnywhere)
 		UFloatingPawnMovement* FMove;
-	UPROPERTY(EditAnywhere)
-		bool canMove;
+
+	UPROPERTY(EditAnywhere,BlueprintReadWrite)
+		bool canMoveFoward;
+	UPROPERTY(EditAnywhere,BlueprintReadWrite)
+		bool canMoveBack;
 
 	
 
@@ -42,14 +45,15 @@ protected:
 
 	void SetHeight(float dir, char rot);
 
-	FHitResult RayCast(float dir, char rot);
+	FHitResult RayCast(float dir, char rot,float offset);
 
 	void MoveX(float Axis);
 	void MoveY(float Axis);
 
 	virtual void NotifyActorBeginOverlap(AActor* OtherActor);
 	virtual void NotifyActorEndOverlap(AActor* OtherActor);
-	class USphereComponent* SphereComp;
+	UPROPERTY(EditAnywhere)
+		class USphereComponent* SphereComp;
 	AActorSpawner* other;
 
 	void Swap();

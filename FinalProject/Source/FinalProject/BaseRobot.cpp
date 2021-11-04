@@ -1,9 +1,9 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "Components/SphereComponent.h"
+
 
 #include "BaseRobot.h"
-
+#include "Components/SphereComponent.h"
 // Sets default values
 ABaseRobot::ABaseRobot()
 {
@@ -18,7 +18,9 @@ ABaseRobot::ABaseRobot()
 	MeshComponent->SetupAttachment(RootComponent);
 
 	FMove = CreateDefaultSubobject<UFloatingPawnMovement>(TEXT("FloatingMovement"));
-	canMove = true;
+
+	canMoveFoward = true;
+	canMoveBack = true;
 
 	SphereComp = CreateDefaultSubobject<USphereComponent>(TEXT("SphereComp"));
 	SphereComp->SetupAttachment(RootComponent);
@@ -92,29 +94,39 @@ void ABaseRobot::Fire()
 }
 
 void ABaseRobot::SetHeight(float dir, char rot) {
-	if (dir == 0) return;
-	FHitResult hit = RayCast(dir, rot);
-	float height = hit.Location.Z;
+
+	FHitResult center = RayCast(dir, rot, 0);
+	FHitResult left = RayCast(dir, rot, -50);
+	FHitResult right = RayCast(dir, rot, 50);
+	float h1 = center.Location.Z;
+	float h2 = left.Location.Z;
+	float h3 = right.Location.Z;
+
+	float height = (h1 + h2 + h3) / 3;
 	FVector newloc = GetActorLocation();
 	newloc.Z = height + 100;
 	SetActorLocation(newloc);
 }
-FHitResult ABaseRobot::RayCast(float dir, char rot)
+FHitResult ABaseRobot::RayCast(float dir, char rot, float offset)
 {
 	FVector start = GetActorLocation();
 	const FRotator Rotation = Controller->GetControlRotation();
 	const FRotator YawRotation(0, Rotation.Yaw, 0);
 	FVector end;
-	if (rot == 'f')
+	if (rot == 'f') {
 		end = start + (FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X) * 100 * dir);
-	else
+	}
+	else {
 		end = start + (FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y) * 100 * dir);
-	end.Z = (start.Z - 200);
+	}
+	end.X += offset;
+	end.Y += offset;
+	end.Z = (start.Z - 500);
 
 
 
 	//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, FString::Printf(TEXT("Start%s"), *start.ToString()));
-	DrawDebugLine(GetWorld(), start, end, FColor::Yellow, false, (0, 0, 1));
+	DrawDebugLine(GetWorld(), start, end, FColor::Yellow, false, (-1, 0, 1));
 
 	FCollisionQueryParams collisionParams;
 	collisionParams.AddIgnoredActor(this);
@@ -129,28 +141,31 @@ FHitResult ABaseRobot::RayCast(float dir, char rot)
 
 void ABaseRobot::MoveX(float Axis)
 {
+	if (!Axis) return;
+	if (Axis > 0 && !canMoveFoward) return;
+	if (Axis < 0 && !canMoveBack) return;
 
-	if (canMove) {
-		SetHeight(Axis, 'l');
+		SetHeight(Axis, 'f');
 		const FRotator Rotation = Controller->GetControlRotation();
 		const FRotator YawRotation(0, Rotation.Yaw, 0);
 		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
 		AddMovementInput(Direction, Axis);
-	}
 }
-void ABaseRobot::MoveY(float Axis)
-{
+void ABaseRobot::MoveY(float Axis){
 
 
-	if (canMove) {
-		SetHeight(Axis, 'f');
-	
-		const FRotator Rotation = Controller->GetControlRotation();
-		const FRotator YawRotation(0, Rotation.Yaw, 0);
-		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
-		AddMovementInput(Direction, Axis);
-	}
+	if (!Axis) return;
+	if (Axis > 0 && !canMoveFoward) return;
+	if (Axis < 0 && !canMoveBack) return;
+
+	SetHeight(Axis, 'l');
+
+	const FRotator Rotation = Controller->GetControlRotation();
+	const FRotator YawRotation(0, Rotation.Yaw, 0);
+	const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
+	AddMovementInput(Direction, Axis);
 }
+
 
 void ABaseRobot::SpawnActors()
 {
