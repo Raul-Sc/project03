@@ -35,7 +35,10 @@ public:
 		bool canMoveFoward;
 	UPROPERTY(EditAnywhere,BlueprintReadWrite)
 		bool canMoveBack;
-
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		bool canMoveRight;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		bool canMoveLeft;
 	
 
 protected:
@@ -46,6 +49,8 @@ protected:
 	void SetHeight(float dir, char rot);
 
 	FHitResult RayCast(float dir, char rot,float offset);
+	FHitResult RayCast(float dir, char rot);
+	void checkCollision(float dir, char rot);
 
 	void MoveX(float Axis);
 	void MoveY(float Axis);

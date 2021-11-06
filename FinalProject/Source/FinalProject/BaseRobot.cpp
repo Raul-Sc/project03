@@ -21,6 +21,8 @@ ABaseRobot::ABaseRobot()
 
 	canMoveFoward = true;
 	canMoveBack = true;
+	canMoveRight = true;
+	canMoveLeft = true;
 
 	SphereComp = CreateDefaultSubobject<USphereComponent>(TEXT("SphereComp"));
 	SphereComp->SetupAttachment(RootComponent);
@@ -139,9 +141,75 @@ FHitResult ABaseRobot::RayCast(float dir, char rot, float offset)
 	return outHit;
 }
 
+FHitResult ABaseRobot::RayCast(float dir, char rot) {
+	float range = 70;
+	FVector start = GetActorLocation();
+	const FRotator Rotation = Controller->GetControlRotation();
+	const FRotator YawRotation(0, Rotation.Yaw, 0);
+	FVector end;
+	if (rot == 'f') {
+		end = start + (FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X) * range * dir);
+	}
+	else {
+		end = start + (FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y) * range * dir);
+	}
+	DrawDebugLine(GetWorld(), start, end, FColor::Blue, false, (-1, 0, 1));
+
+	FCollisionQueryParams collisionParams;
+	collisionParams.AddIgnoredActor(this);
+	collisionParams.bFindInitialOverlaps = true;
+	collisionParams.bTraceComplex = false;
+
+	FHitResult outHit;
+	bool isHit = GetWorld()->LineTraceSingleByChannel(outHit, start, end, ECC_Visibility, collisionParams);
+
+	return outHit;
+
+
+}
+void ABaseRobot::checkCollision(float dir, char rot) {
+	FHitResult hit = RayCast(dir, rot);
+	if (hit.Time != 1.0) {
+		FMove->Velocity = FVector(0, 0, 0);
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, FString::Printf(TEXT("HIT %f"), hit.Time));
+		if (rot == 'f') {
+			if (dir > 0) {
+				canMoveFoward = false;
+			}
+			else if (dir < 0)
+				canMoveBack = false;
+		}
+		else {
+			if (dir > 0) {
+				canMoveRight = false;
+			}
+			else if (dir < 0)
+				canMoveLeft = false;
+		}
+	}
+	else {
+		if (rot == 'f') {
+			if (dir > 0) {
+				canMoveFoward = true;
+			}
+			else if (dir < 0)
+				canMoveBack = true;
+		}
+		else {
+			if (dir > 0) {
+				canMoveRight = true;
+			}
+			else if (dir < 0)
+				canMoveLeft = true;
+		}
+
+	}
+}
+
 void ABaseRobot::MoveX(float Axis)
 {
 	if (!Axis) return;
+	checkCollision(Axis, 'f');
 	if (Axis > 0 && !canMoveFoward) return;
 	if (Axis < 0 && !canMoveBack) return;
 
@@ -155,8 +223,9 @@ void ABaseRobot::MoveY(float Axis){
 
 
 	if (!Axis) return;
-	if (Axis > 0 && !canMoveFoward) return;
-	if (Axis < 0 && !canMoveBack) return;
+	checkCollision(Axis, 'l');
+	if (Axis > 0 && !canMoveRight) return;
+	if (Axis < 0 && !canMoveLeft) return;
 
 	SetHeight(Axis, 'l');
 
