@@ -48,6 +48,7 @@ protected:
 
 	void SetHeight(float dir, char rot);
 
+
 	FHitResult RayCast(float dir, char rot,float offset);
 	FHitResult RayCast(float dir, char rot);
 	void checkCollision(float dir, char rot);

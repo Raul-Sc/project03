@@ -15,4 +15,7 @@ class FINALPROJECT_API AEnemyRobot : public ABaseRobot
 	GENERATED_BODY()
 public:
 	virtual void Tick(float DeltaTime) override;
+
+	UFUNCTION(BlueprintCallable)
+		void setHeight(float offset);
 };

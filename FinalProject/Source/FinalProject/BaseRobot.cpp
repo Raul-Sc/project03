@@ -138,6 +138,7 @@ FHitResult ABaseRobot::RayCast(float dir, char rot, float offset)
 	FHitResult outHit;
 	bool isHit = GetWorld()->LineTraceSingleByChannel(outHit, start, end, ECC_Visibility, collisionParams);
 
+
 	return outHit;
 }
 
@@ -171,7 +172,7 @@ void ABaseRobot::checkCollision(float dir, char rot) {
 	FHitResult hit = RayCast(dir, rot);
 	if (hit.Time != 1.0) {
 		FMove->Velocity = FVector(0, 0, 0);
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, FString::Printf(TEXT("HIT %f"), hit.Time));
+		//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, FString::Printf(TEXT("HIT %f"), hit.Time));
 		if (rot == 'f') {
 			if (dir > 0) {
 				canMoveFoward = false;
