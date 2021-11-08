@@ -44,5 +44,5 @@ public:
 		UMaterialInstanceDynamic* ProjectileMaterialInstance;
 	// Function that initializes the projectile's velocity in the shoot direction.
 	void FireInDirection(const FVector& ShootDirection);
-
+	void NotifyActorBeginOverlap(AActor* OtherActor);
 };

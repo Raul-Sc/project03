@@ -63,7 +63,7 @@ void AProjectile::FireInDirection(const FVector& ShootDirection)
 }
 void AProjectile::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit)
 {
-	if (OtherActor != this && OtherComponent->IsSimulatingPhysics())
+	if (OtherActor != this )
 	{
 		OtherComponent->AddImpulseAtLocation(ProjectileMovementComponent->Velocity * 100.0f, Hit.ImpactPoint);
 	}
@@ -84,3 +84,10 @@ void AProjectile::Tick(float DeltaTime)
 
 }
 
+void AProjectile::NotifyActorBeginOverlap(AActor* OtherActor) {
+
+	if (!OtherActor->ActorHasTag("PlayerObj")) {
+		Destroy();
+		//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, FString::Printf(TEXT("HIT %s"), *OtherActor->GetName()));
+	}
+}

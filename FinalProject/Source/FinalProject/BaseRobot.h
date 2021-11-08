@@ -39,7 +39,9 @@ public:
 		bool canMoveRight;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		bool canMoveLeft;
-	
+	float health;
+	virtual void adjustHeightLevel();
+	float heightLevel;
 
 protected:
 	void SpawnActors();
@@ -47,6 +49,7 @@ protected:
 	virtual void BeginPlay() override;
 
 	void SetHeight(float dir, char rot);
+
 
 
 	FHitResult RayCast(float dir, char rot,float offset);

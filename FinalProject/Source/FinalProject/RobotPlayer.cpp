@@ -24,6 +24,17 @@ ARobotPlayer::ARobotPlayer() {
 	FollowCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));
 
 	FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName);
+
+	hoverState = 1;
 }
 
+void ARobotPlayer::adjustHeightLevel() {
+	Super::adjustHeightLevel();
+	if (hoverState == 1)
+		heightLevel = 600;
+	else
+		heightLevel = 100;
 
+	SetHeight(1, 'f');
+	hoverState = 3 - hoverState;
+}

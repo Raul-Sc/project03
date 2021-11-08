@@ -17,6 +17,8 @@ UCLASS()
 class FINALPROJECT_API ARobotPlayer : public ABaseRobot
 {
 	GENERATED_BODY()
+protected:
+	int hoverState;
 
 public:
 	ARobotPlayer();
@@ -26,6 +28,6 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
 		UCameraComponent* FollowCamera;
 
-
+	virtual void adjustHeightLevel();
 	
 };

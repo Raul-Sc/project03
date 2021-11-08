@@ -23,11 +23,7 @@ void AEnemyRobot::setHeight(float offset) {
 	float h3 = right.Location.Z;
 	float h4 = back.Location.Z;
 
-	FString name = front.GetActor()->GetName();
-	FString rightStr, leftStr;
-	bool get = name.Split("_", &leftStr, &rightStr, ESearchCase::IgnoreCase, ESearchDir::FromStart);
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, FString::Printf(TEXT("%s"), *rightStr));
-	
+
 	float height = (h1 + h2 + h3+ h4) / 4;
 	FVector newloc = GetActorLocation();
 	newloc.Z = height + offset;

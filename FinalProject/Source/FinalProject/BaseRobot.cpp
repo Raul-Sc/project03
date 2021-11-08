@@ -29,6 +29,9 @@ ABaseRobot::ABaseRobot()
 	SphereComp->SetSphereRadius(200);
 
 	canSwitch = false;
+
+	health = 100;
+	heightLevel = 100;
 }
 
 // Called when the game starts or when spawned
@@ -73,7 +76,9 @@ void ABaseRobot::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 }
+void ABaseRobot::adjustHeightLevel() {
 
+}
 // Called to bind functionality to input
 void ABaseRobot::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
@@ -86,6 +91,7 @@ void ABaseRobot::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 	PlayerInputComponent->BindAction("Fire", IE_Pressed, this, &ABaseRobot::Fire);
 	PlayerInputComponent->BindAction("Spawn", IE_Pressed, this, &ABaseRobot::SpawnActors);
 	PlayerInputComponent->BindAction("Swap", IE_Pressed, this, &ABaseRobot::Swap);
+	PlayerInputComponent->BindAction("Hover",IE_Pressed, this, &ABaseRobot::adjustHeightLevel);
 }
 //will be moved into weapons
 void ABaseRobot::Fire()
@@ -106,7 +112,7 @@ void ABaseRobot::SetHeight(float dir, char rot) {
 
 	float height = (h1 + h2 + h3) / 3;
 	FVector newloc = GetActorLocation();
-	newloc.Z = height + 100;
+	newloc.Z = height + heightLevel;
 	SetActorLocation(newloc);
 }
 FHitResult ABaseRobot::RayCast(float dir, char rot, float offset)
@@ -209,6 +215,7 @@ void ABaseRobot::checkCollision(float dir, char rot) {
 
 void ABaseRobot::MoveX(float Axis)
 {
+
 	if (!Axis) return;
 	checkCollision(Axis, 'f');
 	if (Axis > 0 && !canMoveFoward) return;
