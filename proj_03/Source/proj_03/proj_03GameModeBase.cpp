@@ -15,7 +15,20 @@ void Aproj_03GameModeBase::StartPlay()
 	
 	hudManager = Cast<AManagerHUD>(UGameplayStatics::GetPlayerController(this, 0)->GetHUD());
 	
-	//	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, TEXT("Hud Ready!"));
+	spawnStuff();
+	
+}
 
-	//hudManager->removeWidget("Mission");
+void Aproj_03GameModeBase::spawnStuff() {
+
+	FVector spawnLocation(0, 0, 100);
+	FRotator spawnRotation(0, 0, 0);
+	if (mainPlayer) {
+		const FActorSpawnParameters spawnParams;
+		player = GetWorld()->SpawnActor<ARobotPawn>(mainPlayer, spawnLocation, spawnRotation, spawnParams);
+
+		//attach HudManager
+		player->attachHudManager(hudManager);
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, TEXT("Spawned Player"));
+	}
 }

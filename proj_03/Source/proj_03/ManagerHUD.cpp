@@ -4,6 +4,7 @@
 
 #include "ManagerHUD.h"
 #include "Blueprint/WidgetTree.h"
+#include "Misc/OutputDeviceNull.h"
 void AManagerHUD::BeginPlay() {
 
 	Super::BeginPlay();
@@ -11,22 +12,24 @@ void AManagerHUD::BeginPlay() {
     elements.Add("Coordinates");
     elements.Add("Mission");
     elements.Add("Battery");
+    elements.Add("Marker");
     if (StartingWidgetClass != nullptr)
     {
         CurrentWidget = CreateWidget<UUserWidget>(GetWorld(), StartingWidgetClass);
         if (CurrentWidget != nullptr)
         {
             CurrentWidget->AddToViewport();
-           
+
             hud = CurrentWidget->WidgetTree;
-            
+
             for (int i = 0; i < elements.Num(); i++) {
-               // turnWidgetOff(elements[i]);
+                turnWidgetOff(elements[i]);
             }
 
-       
-             //   GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, FString::Printf(TEXT("Found")  ));
-           
+
+
+            
+             //   GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, FString::Printf(TEXT("Found")));
         }
     }
 }
@@ -51,4 +54,15 @@ void AManagerHUD::removeWidget(const FName& Name) {
 
     if (temp)
         hud->RemoveWidget(temp);
+}
+
+void AManagerHUD::bpSetDirection() {
+
+
+    if (CurrentWidget->FindFunction("setDirection")) {
+      
+        const FString command = FString::Printf(TEXT("setDirection"));
+        FOutputDeviceNull od;
+        CurrentWidget->CallFunctionByNameWithArguments(*command, od, NULL, true);
+    }
 }

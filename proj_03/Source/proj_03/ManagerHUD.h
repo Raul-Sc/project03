@@ -29,4 +29,6 @@ public:
 	void turnWidgetOn(const FName& Name);
 	void turnWidgetOff(const FName& Name);
 	void removeWidget(const FName& Name);
+
+	void bpSetDirection();
 };

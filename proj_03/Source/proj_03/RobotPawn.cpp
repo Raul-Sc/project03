@@ -28,7 +28,7 @@ ARobotPawn::ARobotPawn()
 	SpringArm->CameraLagSpeed = 3.0f;
 
 	//camera component
-	UCameraComponent* Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("ActualCamera"));
+	 Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));
 	Camera->SetupAttachment(SpringArm, USpringArmComponent::SocketName);
 
 	// Create an instance of our movement component, and tell it to update the root.
@@ -39,7 +39,16 @@ ARobotPawn::ARobotPawn()
 	AutoPossessPlayer = EAutoReceiveInput::Player0;
 
 }
+void ARobotPawn::attachHudManager(AManagerHUD* m) {
 
+	if (m) {
+		hudManager = m;
+	}
+	//remove later 
+	hudManager->turnWidgetOn("Coordinates");
+	hudManager->turnWidgetOn("Marker");
+
+}
 // Called when the game starts or when spawned
 void ARobotPawn::BeginPlay()
 {
@@ -93,4 +102,6 @@ void ARobotPawn::Turn(float AxisValue)
 	FRotator NewRotation = GetActorRotation();
 	NewRotation.Yaw += AxisValue;
 	SetActorRotation(NewRotation);
+	
+	if (hudManager) hudManager->bpSetDirection();
 }

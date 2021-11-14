@@ -7,6 +7,9 @@
 #include "CoreMinimal.h"
 #include "GameFramework/GameModeBase.h"
 #include "ManagerHUD.h"
+
+
+#include "RobotPawn.h"
 #include "proj_03GameModeBase.generated.h"
 
 UCLASS()
@@ -19,5 +22,9 @@ private:
 
 	UPROPERTY()
 		AManagerHUD* hudManager;
+	UPROPERTY(EditAnywhere, category = ThingsToSpawn)
+		TSubclassOf<class ARobotPawn> mainPlayer;
+	ARobotPawn* player;
 
+	void spawnStuff();
 };
