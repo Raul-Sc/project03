@@ -3,7 +3,7 @@
   <ItemGroup>
     <None Include="..\..\proj_03.uproject" />
     <Filter Include="Source">
-      <UniqueIdentifier>{4263B121-2E09-4F5B-9D13-CF37FB18016D}</UniqueIdentifier>
+      <UniqueIdentifier>{5790751B-C7C0-4EA2-9C18-97B165D2AF18}</UniqueIdentifier>
     </Filter>
     <None Include="..\..\Source\proj_03.Target.cs">
       <Filter>Source</Filter>
@@ -12,7 +12,7 @@
       <Filter>Source</Filter>
     </None>
     <Filter Include="Config">
-      <UniqueIdentifier>{24EA3BC5-676E-4684-A7A8-C0B882DB346E}</UniqueIdentifier>
+      <UniqueIdentifier>{C0D9237F-4C85-483F-85C0-BA6A60B2D0AF}</UniqueIdentifier>
     </Filter>
     <None Include="..\..\Config\DefaultEditor.ini">
       <Filter>Config</Filter>
@@ -23,8 +23,11 @@
     <None Include="..\..\Config\DefaultGame.ini">
       <Filter>Config</Filter>
     </None>
+    <None Include="..\..\Config\DefaultInput.ini">
+      <Filter>Config</Filter>
+    </None>
     <Filter Include="Source\proj_03">
-      <UniqueIdentifier>{90EEF7B5-B932-415F-8D4B-1140CB7B05F5}</UniqueIdentifier>
+      <UniqueIdentifier>{9F61D465-D90F-4EF0-8532-2DDEE8BDA08F}</UniqueIdentifier>
     </Filter>
     <ClCompile Include="..\..\Source\proj_03\HUDManager.cpp">
       <Filter>Source\proj_03</Filter>
@@ -51,6 +54,18 @@
       <Filter>Source\proj_03</Filter>
     </ClCompile>
     <ClInclude Include="..\..\Source\proj_03\proj_03GameModeBase.h">
+      <Filter>Source\proj_03</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\proj_03\RobotPawn.cpp">
+      <Filter>Source\proj_03</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\proj_03\RobotPawn.h">
+      <Filter>Source\proj_03</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\proj_03\RobotPawnMovement.cpp">
+      <Filter>Source\proj_03</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\proj_03\RobotPawnMovement.h">
       <Filter>Source\proj_03</Filter>
     </ClInclude>
   </ItemGroup>
