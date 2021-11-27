@@ -14,7 +14,7 @@ void URobotPawnMovement::TickComponent(float DeltaTime, enum ELevelTick TickType
     }
 
     // Get (and then clear) the movement vector that we set in ACollidingPawn::Tick
-    FVector DesiredMovementThisFrame = ConsumeInputVector().GetClampedToMaxSize(1.0f) * DeltaTime * 350.0f;
+    FVector DesiredMovementThisFrame = ConsumeInputVector().GetClampedToMaxSize(1.0f) * DeltaTime * 550.0f;
     if (!DesiredMovementThisFrame.IsNearlyZero())
     {
         FHitResult Hit;
@@ -23,7 +23,13 @@ void URobotPawnMovement::TickComponent(float DeltaTime, enum ELevelTick TickType
         // If we bumped into something, try to slide along it
         if (Hit.IsValidBlockingHit())
         {
+            GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, TEXT("Bumped into Something"));
             SlideAlongSurface(DesiredMovementThisFrame, 1.f - Hit.Time, Hit.Normal, Hit);
+        }
+        else{
+            //We are falling 
+            GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, TEXT("Gravity"));
+            AddInputVector(FVector(0, 0, -1) * 9.81);
         }
     }
 };

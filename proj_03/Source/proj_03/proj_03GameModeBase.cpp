@@ -12,7 +12,7 @@ void Aproj_03GameModeBase::StartPlay()
 	// Display a debug message for five seconds. 
 	// The -1 "Key" value argument prevents the message from being updated or refreshed.
 
-	
+	//Get refrence to HUD Blueprint
 	hudManager = Cast<AManagerHUD>(UGameplayStatics::GetPlayerController(this, 0)->GetHUD());
 	
 	spawnStuff();
@@ -27,7 +27,7 @@ void Aproj_03GameModeBase::spawnStuff() {
 		const FActorSpawnParameters spawnParams;
 		player = GetWorld()->SpawnActor<ARobotPawn>(mainPlayer, spawnLocation, spawnRotation, spawnParams);
 
-		//attach HudManager
+		//attach HudManager 
 		player->attachHudManager(hudManager);
 		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, TEXT("Spawned Player"));
 	}

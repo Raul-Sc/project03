@@ -20,12 +20,12 @@ ARobotPawn::ARobotPawn()
 	MeshComponent->SetupAttachment(RootComponent);
 
 	// Use a spring arm to give the camera smooth, natural-feeling motion.
-	USpringArmComponent* SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraAttachmentArm"));
+	SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraAttachmentArm"));
 	SpringArm->SetupAttachment(RootComponent);
 	SpringArm->SetRelativeRotation(FRotator(-45.f, 0.f, 0.f));
 	SpringArm->TargetArmLength = 400.0f;
 	SpringArm->bEnableCameraLag = true;
-	SpringArm->CameraLagSpeed = 3.0f;
+	SpringArm->CameraLagSpeed = 10.0f;
 
 	//camera component
 	 Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));
@@ -60,7 +60,8 @@ void ARobotPawn::BeginPlay()
 void ARobotPawn::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
+	//invokes gravity 
+	OurMovementComponent->AddInputVector(FVector(0,0,0));
 }
 
 // Called to bind functionality to input

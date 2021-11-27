@@ -38,6 +38,8 @@ protected:
 		AManagerHUD* hudManager;
 	UPROPERTY()
 		UCameraComponent* Camera;
+	UPROPERTY(EditAnywhere)
+		USpringArmComponent* SpringArm;
 
 public:	
 	// Called every frame
