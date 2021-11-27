@@ -29,12 +29,6 @@
     <Filter Include="Source\proj_03">
       <UniqueIdentifier>{9F61D465-D90F-4EF0-8532-2DDEE8BDA08F}</UniqueIdentifier>
     </Filter>
-    <ClCompile Include="..\..\Source\proj_03\HUDManager.cpp">
-      <Filter>Source\proj_03</Filter>
-    </ClCompile>
-    <ClInclude Include="..\..\Source\proj_03\HUDManager.h">
-      <Filter>Source\proj_03</Filter>
-    </ClInclude>
     <ClCompile Include="..\..\Source\proj_03\ManagerHUD.cpp">
       <Filter>Source\proj_03</Filter>
     </ClCompile>
