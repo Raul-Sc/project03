@@ -13,6 +13,7 @@ void AManagerHUD::BeginPlay() {
     elements.Add("Mission");
     elements.Add("Battery");
     elements.Add("Marker");
+    elements.Add("Waypoint");
     if (StartingWidgetClass != nullptr)
     {
         CurrentWidget = CreateWidget<UUserWidget>(GetWorld(), StartingWidgetClass);
@@ -62,6 +63,16 @@ void AManagerHUD::bpSetDirection() {
     if (CurrentWidget->FindFunction("setDirection")) {
       
         const FString command = FString::Printf(TEXT("setDirection"));
+        FOutputDeviceNull od;
+        CurrentWidget->CallFunctionByNameWithArguments(*command, od, NULL, true);
+    }
+}
+void AManagerHUD::bpSetWaypoint() {
+
+
+    if (CurrentWidget->FindFunction("setWaypoint")) {
+
+        const FString command = FString::Printf(TEXT("setWaypoint"));
         FOutputDeviceNull od;
         CurrentWidget->CallFunctionByNameWithArguments(*command, od, NULL, true);
     }

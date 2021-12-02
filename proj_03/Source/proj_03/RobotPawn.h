@@ -40,6 +40,8 @@ protected:
 		UCameraComponent* Camera;
 	UPROPERTY(EditAnywhere)
 		USpringArmComponent* SpringArm;
+	UPROPERTY(BlueprintReadOnly)
+		FVector waypoint;
 
 public:	
 	// Called every frame
@@ -51,6 +53,8 @@ public:
 	virtual UPawnMovementComponent* GetMovementComponent() const override;
 
 	void attachHudManager(AManagerHUD* m);
+	void setWaypoint(FVector location);
+
 
 	void MoveForward(float AxisValue);
 	void MoveRight(float AxisValue);

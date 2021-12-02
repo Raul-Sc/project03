@@ -14,6 +14,8 @@ void Aproj_03GameModeBase::StartPlay()
 
 	//Get refrence to HUD Blueprint
 	hudManager = Cast<AManagerHUD>(UGameplayStatics::GetPlayerController(this, 0)->GetHUD());
+
+	targetLocation = FVector(0, 0, 0);
 	
 	spawnStuff();
 	
@@ -27,8 +29,10 @@ void Aproj_03GameModeBase::spawnStuff() {
 		const FActorSpawnParameters spawnParams;
 		player = GetWorld()->SpawnActor<ARobotPawn>(mainPlayer, spawnLocation, spawnRotation, spawnParams);
 
-		//attach HudManager 
+		//attach HudManager and set target location
 		player->attachHudManager(hudManager);
+		player->setWaypoint(targetLocation);
+
 		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, TEXT("Spawned Player"));
 	}
 }

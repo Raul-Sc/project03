@@ -44,10 +44,14 @@ void ARobotPawn::attachHudManager(AManagerHUD* m) {
 	if (m) {
 		hudManager = m;
 	}
-	//remove later 
+	//remove later ?
 	hudManager->turnWidgetOn("Coordinates");
 	hudManager->turnWidgetOn("Marker");
 
+}
+void ARobotPawn::setWaypoint(FVector location) {
+	waypoint = location;
+	hudManager->turnWidgetOn("Waypoint");
 }
 // Called when the game starts or when spawned
 void ARobotPawn::BeginPlay()
@@ -85,6 +89,7 @@ void ARobotPawn::MoveForward(float AxisValue)
 	if (OurMovementComponent && (OurMovementComponent->UpdatedComponent == RootComponent))
 	{
 		OurMovementComponent->AddInputVector(GetActorForwardVector() * AxisValue);
+		if(hudManager) hudManager->bpSetWaypoint();
 	}
 }
 
@@ -94,6 +99,7 @@ void ARobotPawn::MoveRight(float AxisValue)
 	if (OurMovementComponent && (OurMovementComponent->UpdatedComponent == RootComponent))
 	{
 		OurMovementComponent->AddInputVector(GetActorRightVector() * AxisValue);
+		if(hudManager) hudManager->bpSetWaypoint();
 	}
 }
 
@@ -104,5 +110,8 @@ void ARobotPawn::Turn(float AxisValue)
 	NewRotation.Yaw += AxisValue;
 	SetActorRotation(NewRotation);
 	
-	if (hudManager) hudManager->bpSetDirection();
+	if (hudManager) {
+		hudManager->bpSetDirection();
+		hudManager->bpSetWaypoint();
+	}
 }

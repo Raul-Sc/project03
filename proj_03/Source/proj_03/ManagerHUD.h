@@ -31,4 +31,5 @@ public:
 	void removeWidget(const FName& Name);
 
 	void bpSetDirection();
+	void bpSetWaypoint();
 };

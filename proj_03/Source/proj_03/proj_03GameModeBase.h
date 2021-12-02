@@ -26,5 +26,7 @@ private:
 		TSubclassOf<class ARobotPawn> mainPlayer;
 	ARobotPawn* player;
 
+	FVector targetLocation;
+
 	void spawnStuff();
 };
