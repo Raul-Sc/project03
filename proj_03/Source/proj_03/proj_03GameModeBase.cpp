@@ -23,7 +23,7 @@ void Aproj_03GameModeBase::StartPlay()
 
 void Aproj_03GameModeBase::spawnStuff() {
 
-	FVector spawnLocation(0, 0, 100);
+	FVector spawnLocation(0, 0, 50);
 	FRotator spawnRotation(0, 0, 0);
 	if (mainPlayer) {
 		const FActorSpawnParameters spawnParams;

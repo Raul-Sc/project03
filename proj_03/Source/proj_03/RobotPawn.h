@@ -8,6 +8,7 @@
 #include "UObject/ConstructorHelpers.h"
 
 #include "Components/SphereComponent.h"
+#include "Components/BoxComponent.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "ManagerHUD.h"

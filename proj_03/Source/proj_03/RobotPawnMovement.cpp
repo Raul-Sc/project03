@@ -2,7 +2,7 @@
 
 
 #include "RobotPawnMovement.h"
-
+#include "DrawDebugHelpers.h"
 void URobotPawnMovement::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
     Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
@@ -15,6 +15,7 @@ void URobotPawnMovement::TickComponent(float DeltaTime, enum ELevelTick TickType
 
     // Get (and then clear) the movement vector that we set in ACollidingPawn::Tick
     FVector DesiredMovementThisFrame = ConsumeInputVector().GetClampedToMaxSize(1.0f) * DeltaTime * 550.0f;
+ 
     if (!DesiredMovementThisFrame.IsNearlyZero())
     {
         FHitResult Hit;
@@ -23,13 +24,34 @@ void URobotPawnMovement::TickComponent(float DeltaTime, enum ELevelTick TickType
         // If we bumped into something, try to slide along it
         if (Hit.IsValidBlockingHit())
         {
-            GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, TEXT("Bumped into Something"));
+           
             SlideAlongSurface(DesiredMovementThisFrame, 1.f - Hit.Time, Hit.Normal, Hit);
         }
         else{
-            //We are falling 
-            GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, TEXT("Gravity"));
-            AddInputVector(FVector(0, 0, -1) * 9.81);
+            //We check for gravity and add if needed
+         
+            addGravity();
+     
         }
     }
-};
+}
+void URobotPawnMovement::addGravity(){
+   
+    FVector start = PawnOwner->GetActorLocation();
+    FVector end = start + FVector(0, 0, -45);
+
+    FCollisionQueryParams collisionParams;
+    collisionParams.AddIgnoredActor(PawnOwner);
+    collisionParams.bFindInitialOverlaps = true;
+    collisionParams.bTraceComplex = false;
+   
+   // DrawDebugLine(GetWorld(), start, end, FColor::Yellow, true, (-1, 0, 1));
+    FHitResult outHit;
+    bool isHit = GetWorld()->LineTraceSingleByChannel(outHit, start, end, ECC_Visibility, collisionParams);
+    if (!isHit) {
+      //  GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, TEXT("Gravity"));
+        AddInputVector(FVector(0, 0, -1));
+    }
+    
+
+}

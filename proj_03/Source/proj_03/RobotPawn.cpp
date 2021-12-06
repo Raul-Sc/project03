@@ -9,10 +9,11 @@ ARobotPawn::ARobotPawn()
 {
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-
+	
 	USphereComponent* SphereComponent = CreateDefaultSubobject<USphereComponent>(TEXT("RootComponent"));
 	RootComponent = SphereComponent;
 	SphereComponent->InitSphereRadius(40.0f);
+	
 	SphereComponent->SetCollisionProfileName(TEXT("Pawn"));
 
 	//Editable Mesh 
@@ -64,8 +65,8 @@ void ARobotPawn::BeginPlay()
 void ARobotPawn::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	//invokes gravity 
-	OurMovementComponent->AddInputVector(FVector(0,0,0));
+
+	
 }
 
 // Called to bind functionality to input
