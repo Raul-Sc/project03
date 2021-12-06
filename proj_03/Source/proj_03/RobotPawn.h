@@ -44,6 +44,8 @@ protected:
 	UPROPERTY(BlueprintReadOnly)
 		FVector waypoint;
 
+	UPROPERTY(BlueprintReadOnly)
+		float batteryLife;
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;

@@ -38,7 +38,7 @@ ARobotPawn::ARobotPawn()
 
 	// Take control of the default player
 	AutoPossessPlayer = EAutoReceiveInput::Player0;
-
+	batteryLife = 100;
 }
 void ARobotPawn::attachHudManager(AManagerHUD* m) {
 
@@ -65,7 +65,7 @@ void ARobotPawn::BeginPlay()
 void ARobotPawn::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, FString::Printf(TEXT("Battery: %f"),batteryLife ));
 	
 }
 
