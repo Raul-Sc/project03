@@ -25,8 +25,8 @@ ARobotPawn::ARobotPawn()
 	SpringArm->SetupAttachment(RootComponent);
 	SpringArm->SetRelativeRotation(FRotator(-45.f, 0.f, 0.f));
 	SpringArm->TargetArmLength = 400.0f;
-	SpringArm->bEnableCameraLag = true;
-	SpringArm->CameraLagSpeed = 10.0f;
+	//SpringArm->bEnableCameraLag = true;
+	//SpringArm->CameraLagSpeed = 10.0f;
 
 	//camera component
 	 Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));
@@ -74,7 +74,7 @@ void ARobotPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 	PlayerInputComponent->BindAxis("MoveForward", this, &ARobotPawn::MoveForward);
-	PlayerInputComponent->BindAxis("MoveRight", this, &ARobotPawn::MoveRight);
+	//PlayerInputComponent->BindAxis("MoveRight", this, &ARobotPawn::MoveRight);
 	PlayerInputComponent->BindAxis("Turn", this, &ARobotPawn::Turn);
 }
 

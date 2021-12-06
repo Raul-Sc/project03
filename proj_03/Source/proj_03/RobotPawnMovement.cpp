@@ -14,7 +14,7 @@ void URobotPawnMovement::TickComponent(float DeltaTime, enum ELevelTick TickType
     }
 
     // Get (and then clear) the movement vector that we set in ACollidingPawn::Tick
-    FVector DesiredMovementThisFrame = ConsumeInputVector().GetClampedToMaxSize(1.0f) * DeltaTime * 550.0f;
+    FVector DesiredMovementThisFrame = ConsumeInputVector().GetClampedToMaxSize(1.0f) * DeltaTime * 1000.0f;
  
     if (!DesiredMovementThisFrame.IsNearlyZero())
     {
