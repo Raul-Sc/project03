@@ -255,6 +255,18 @@
 			]
 		},
 		{
+			"ShaderMapHash": "C3BD1E49A3AED13D1D7018CE57EA752B27C6F317",
+			"Assets": [
+				"/Game/Materials/50_2"
+			]
+		},
+		{
+			"ShaderMapHash": "59DC3C5E28449219738C81EA58E4AF04BB60C326",
+			"Assets": [
+				"/Game/Materials/Glow"
+			]
+		},
+		{
 			"ShaderMapHash": "C6BF47CB64F752FCE9305259E653EACD3344D89A",
 			"Assets": [
 				"/Engine/EngineMaterials/PPM_DefaultCalibrationGrayscale"
@@ -282,12 +294,6 @@
 			"ShaderMapHash": "27D3EE0E54413410E82490B0B223C6D33E5A3F61",
 			"Assets": [
 				"/Game/Terrain/Material"
-			]
-		},
-		{
-			"ShaderMapHash": "C3BD1E49A3AED13D1D7018CE57EA752B27C6F317",
-			"Assets": [
-				"/Game/Materials/50_2"
 			]
 		},
 		{
@@ -384,12 +390,6 @@
 			"ShaderMapHash": "E37C94458BC35BDE071DF97C0498EA17298E805F",
 			"Assets": [
 				"/Landmass/DistanceFields/Materials/BlurEdges"
-			]
-		},
-		{
-			"ShaderMapHash": "59DC3C5E28449219738C81EA58E4AF04BB60C326",
-			"Assets": [
-				"/Game/Materials/Glow"
 			]
 		},
 		{

@@ -67,6 +67,7 @@ protected:
 	FTimerHandle flashLightDrainHandle;
 	FTimerHandle moveDrainHandle;
 
+	UPROPERTY(BlueprintReadOnly)
 	bool statusOn = false;
 
 public:	

@@ -1,4 +1,4 @@
-proj_03/Binaries/Win64/proj_03-Win64-Shipping.exe	2021-12-09T04:52:27.448Z
+proj_03/Binaries/Win64/proj_03-Win64-Shipping.exe	2021-12-09T05:20:24.518Z
 proj_03/Binaries/Win64/OpenImageDenoise.dll	2021-10-09T13:59:59.208Z
 proj_03/Binaries/Win64/tbb12.dll	2021-10-09T13:59:59.209Z
 Engine/Extras/Redist/en-us/UE4PrereqSetup_x64.exe	2021-10-09T13:47:01.696Z
@@ -21,4 +21,4 @@ Engine/Binaries/ThirdParty/OpenXR/win64/openxr_loader.dll	2021-10-09T13:43:03.63
 Engine/Binaries/ThirdParty/OpenVR/OpenVRv1_5_17/Win64/openvr_api.dll	2021-10-09T13:43:03.629Z
 Engine/Binaries/ThirdParty/NVIDIA/GeForceNOW/Win64/GfnRuntimeSdk.dll	2021-10-09T13:43:03.456Z
 Engine/Binaries/ThirdParty/Windows/XAudio2_9/x64/xaudio2_9redist.dll	2021-10-09T13:43:49.836Z
-proj_03.exe	2021-12-09T04:53:09.545Z
+proj_03.exe	2021-12-09T05:20:49.159Z
