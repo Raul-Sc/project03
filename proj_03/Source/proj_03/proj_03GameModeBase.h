@@ -10,6 +10,7 @@
 
 
 #include "RobotPawn.h"
+#include "Battery.h"
 #include "proj_03GameModeBase.generated.h"
 
 UCLASS()
@@ -24,9 +25,22 @@ private:
 		AManagerHUD* hudManager;
 	UPROPERTY(EditAnywhere, category = ThingsToSpawn)
 		TSubclassOf<class ARobotPawn> mainPlayer;
+
+	UPROPERTY(EditAnywhere, category = ThingsToSpawn)
+		TSubclassOf<class ABattery> battery;
+
+	UPROPERTY(EditAnywhere, category = ThingsToSpawn)
+		TSubclassOf<class AActor> finishLine;
+
+
+
 	ARobotPawn* player;
 
 	FVector targetLocation;
+	FVector spawnLocation;
 
 	void spawnStuff();
+public:
+	UFUNCTION(BlueprintCallable)
+		void spawnBattery();
 };

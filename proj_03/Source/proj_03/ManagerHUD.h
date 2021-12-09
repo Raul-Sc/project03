@@ -32,4 +32,7 @@ public:
 
 	void bpSetDirection();
 	void bpSetWaypoint();
+
+	UFUNCTION(BlueprintCallable)
+	void bpSetBattery();
 };

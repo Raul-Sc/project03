@@ -10,8 +10,8 @@ void AManagerHUD::BeginPlay() {
 	Super::BeginPlay();
    
     elements.Add("Coordinates");
-    elements.Add("Mission");
-    elements.Add("Battery");
+    elements.Add("Status");
+    //elements.Add("battery");
     elements.Add("Marker");
     elements.Add("Waypoint");
     if (StartingWidgetClass != nullptr)
@@ -43,7 +43,7 @@ void AManagerHUD::turnWidgetOn(const FName& Name) {
 
 }
 void AManagerHUD::turnWidgetOff(const FName& Name) {
-
+  
     UWidget* temp = hud->FindWidget(Name);
 
     if (temp)
@@ -73,6 +73,16 @@ void AManagerHUD::bpSetWaypoint() {
     if (CurrentWidget->FindFunction("setWaypoint")) {
 
         const FString command = FString::Printf(TEXT("setWaypoint"));
+        FOutputDeviceNull od;
+        CurrentWidget->CallFunctionByNameWithArguments(*command, od, NULL, true);
+    }
+}
+void AManagerHUD::bpSetBattery() {
+
+
+    if (CurrentWidget->FindFunction("setBattery")) {
+
+        const FString command = FString::Printf(TEXT("setBattery"));
         FOutputDeviceNull od;
         CurrentWidget->CallFunctionByNameWithArguments(*command, od, NULL, true);
     }

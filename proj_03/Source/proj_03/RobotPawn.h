@@ -41,11 +41,34 @@ protected:
 		UCameraComponent* Camera;
 	UPROPERTY(EditAnywhere)
 		USpringArmComponent* SpringArm;
-	UPROPERTY(BlueprintReadOnly)
+
+	UPROPERTY(EditAnywhere)
 		FVector waypoint;
 
-	UPROPERTY(BlueprintReadOnly)
+
 		float batteryLife;
+
+	UPROPERTY(BlueprintReadOnly)
+			int batteriesUsed;
+
+	int counter; 
+
+	bool coordsOn;
+	bool coordsDrain = true;
+
+	bool moveDrain = true;
+
+	UPROPERTY(BlueprintReadWrite)
+		bool flashLightOn;
+
+	bool flashlightDrain = true;
+
+	FTimerHandle coordsDrainHandle;
+	FTimerHandle flashLightDrainHandle;
+	FTimerHandle moveDrainHandle;
+
+	bool statusOn = false;
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -58,8 +81,27 @@ public:
 	void attachHudManager(AManagerHUD* m);
 	void setWaypoint(FVector location);
 
+	UFUNCTION(BlueprintCallable)
+	FVector getWayPoint(){ return waypoint; }
+
+	UFUNCTION(BlueprintCallable)
+		void drainBattery(float drain); 
+	UFUNCTION(BlueprintCallable)
+		float getBatteryLife() { return batteryLife; }
+
+	
+
+	void resetCoordsDrain();
+	void resetLightDrain();
+	void resetMoveDrain();
 
 	void MoveForward(float AxisValue);
 	void MoveRight(float AxisValue);
 	void Turn(float AxisValue);
+	void toggleCompass();
+
+	UFUNCTION(BlueprintCallable)
+		void toggleLight();
+	UFUNCTION(BlueprintCallable)
+		void toggleStatus();
 };

@@ -15,15 +15,15 @@ void Aproj_03GameModeBase::StartPlay()
 	//Get refrence to HUD Blueprint
 	hudManager = Cast<AManagerHUD>(UGameplayStatics::GetPlayerController(this, 0)->GetHUD());
 	
-	targetLocation = FVector(46795, 44817, 100);
+	targetLocation = FVector(68600, 62600, 1310);
+	spawnLocation = FVector(-41318, -34159, 1090);
 	
 	spawnStuff();
-	
 }
 
 void Aproj_03GameModeBase::spawnStuff() {
 	
-	FVector spawnLocation(-44138.312500, -32879.496094, 450);
+
 	FRotator spawnRotation(0, -20, 0);
 	if (mainPlayer) {
 		const FActorSpawnParameters spawnParams;
@@ -35,4 +35,31 @@ void Aproj_03GameModeBase::spawnStuff() {
 
 		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, TEXT("Spawned Player"));
 	}
+	if (finishLine) {
+		const FActorSpawnParameters spawnParams;
+		GetWorld()->SpawnActor<AActor>(finishLine, targetLocation, spawnRotation, spawnParams);
+
+		//attach HudManager and set target location
+
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, TEXT("Spawned Finish"));
+	}
+}
+
+void Aproj_03GameModeBase::spawnBattery() {
+	
+	if (player) {
+		FVector location = player->GetActorLocation();
+		FRotator spawnRotation = player->GetActorRotation();
+		if (battery) {
+			const FActorSpawnParameters spawnParams;
+			ABattery* temp = GetWorld()->SpawnActor<ABattery>(battery, location, spawnRotation, spawnParams);
+			float charge = player->getBatteryLife();
+			temp->setCharge(charge);
+
+
+			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, TEXT("Spawned Battery"));
+		}
+		player->SetActorLocation(spawnLocation);
+	}
+
 }

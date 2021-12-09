@@ -3,7 +3,7 @@
 
 #include "RobotPawn.h"
 #include "RobotPawnMovement.h"
-
+#include "Misc/OutputDeviceNull.h"
 // Sets default values
 ARobotPawn::ARobotPawn()
 {
@@ -39,20 +39,23 @@ ARobotPawn::ARobotPawn()
 	// Take control of the default player
 	AutoPossessPlayer = EAutoReceiveInput::Player0;
 	batteryLife = 100;
+	counter = 0;
+	coordsOn = false;
+	flashLightOn = false;
+
+	batteriesUsed = 0;
 }
 void ARobotPawn::attachHudManager(AManagerHUD* m) {
 
 	if (m) {
 		hudManager = m;
 	}
-	//remove later ?
-	hudManager->turnWidgetOn("Coordinates");
-	hudManager->turnWidgetOn("Marker");
+	
+
 
 }
 void ARobotPawn::setWaypoint(FVector location) {
 	waypoint = location;
-	hudManager->turnWidgetOn("Waypoint");
 }
 // Called when the game starts or when spawned
 void ARobotPawn::BeginPlay()
@@ -65,10 +68,35 @@ void ARobotPawn::BeginPlay()
 void ARobotPawn::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, FString::Printf(TEXT("Battery: %f"),batteryLife ));
+	//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, FString::Printf(TEXT("Battery: %f"),batteryLife ));
+	if (coordsOn) {
+		if (coordsDrain) {
+			coordsDrain = false;
+			drainBattery(0.5);
+			GetWorld()->GetTimerManager().SetTimer(coordsDrainHandle, this, &ARobotPawn::resetCoordsDrain, 1, false);
+		}
+	}
+	if (flashLightOn) {
+		if (flashlightDrain) {
+			flashlightDrain = false;
+			drainBattery(1.5);
+			GetWorld()->GetTimerManager().SetTimer(flashLightDrainHandle, this, &ARobotPawn::resetLightDrain, 1, false);
+		}
+	}
 	
 }
-
+void ARobotPawn::resetCoordsDrain() {
+	coordsDrain = true;
+	GetWorldTimerManager().ClearTimer(coordsDrainHandle);
+}
+void ARobotPawn::resetLightDrain() {
+	flashlightDrain = true;
+	GetWorldTimerManager().ClearTimer(flashLightDrainHandle);
+}
+void ARobotPawn::resetMoveDrain() {
+	moveDrain = true;
+	GetWorldTimerManager().ClearTimer(moveDrainHandle);
+}
 // Called to bind functionality to input
 void ARobotPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
@@ -76,6 +104,42 @@ void ARobotPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 	PlayerInputComponent->BindAxis("MoveForward", this, &ARobotPawn::MoveForward);
 	//PlayerInputComponent->BindAxis("MoveRight", this, &ARobotPawn::MoveRight);
 	PlayerInputComponent->BindAxis("Turn", this, &ARobotPawn::Turn);
+
+	PlayerInputComponent->BindAction("ToggleCompass", EInputEvent::IE_Pressed, this, &ARobotPawn::toggleCompass);
+	//Already in Blueprint 
+	//PlayerInputComponent->BindAction("ToggleLight", EInputEvent::IE_Pressed, this, &ARobotPawn::toggleLight);
+	
+}
+void ARobotPawn::toggleCompass()
+{
+	if (coordsOn) {
+		coordsOn = false;
+		hudManager->turnWidgetOff("Coordinates");
+		hudManager->turnWidgetOff("Marker");
+		hudManager->turnWidgetOff("Waypoint");
+	}
+	else {
+		coordsOn = true;
+		hudManager->turnWidgetOn("Coordinates");
+		hudManager->turnWidgetOn("Marker");
+		hudManager->turnWidgetOn("Waypoint");
+	}
+}
+void ARobotPawn::toggleLight() {
+	//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, FString::Printf(TEXT("Light: %d"), flashLightOn));
+	if (flashLightOn) flashLightOn = false;
+	else flashLightOn = true;
+}
+void ARobotPawn::toggleStatus() {
+	//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, FString::Printf(TEXT("Light: %d"), flashLightOn));
+	if (statusOn) {
+		statusOn = false;
+		hudManager->turnWidgetOff("Status");
+	}
+	else {
+		statusOn = true;
+		hudManager->turnWidgetOn("Status");
+	}
 }
 
 UPawnMovementComponent* ARobotPawn::GetMovementComponent() const
@@ -86,10 +150,21 @@ UPawnMovementComponent* ARobotPawn::GetMovementComponent() const
 
 void ARobotPawn::MoveForward(float AxisValue)
 {
-	if (!AxisValue) return;
+	
+	if (!AxisValue) {
+		resetMoveDrain();
+		return;
+	}
 	if (OurMovementComponent && (OurMovementComponent->UpdatedComponent == RootComponent))
 	{
+
 		OurMovementComponent->AddInputVector(GetActorForwardVector() * AxisValue);
+		if (moveDrain) {
+			moveDrain = false;
+			drainBattery(.7);
+			GetWorld()->GetTimerManager().SetTimer(moveDrainHandle, this, &ARobotPawn::resetMoveDrain, 1, false);
+		}
+
 		if(hudManager) hudManager->bpSetWaypoint();
 	}
 }
@@ -100,6 +175,7 @@ void ARobotPawn::MoveRight(float AxisValue)
 	if (OurMovementComponent && (OurMovementComponent->UpdatedComponent == RootComponent))
 	{
 		OurMovementComponent->AddInputVector(GetActorRightVector() * AxisValue);
+		
 		if(hudManager) hudManager->bpSetWaypoint();
 	}
 }
@@ -114,5 +190,21 @@ void ARobotPawn::Turn(float AxisValue)
 	if (hudManager) {
 		hudManager->bpSetDirection();
 		hudManager->bpSetWaypoint();
+	}
+}
+
+void ARobotPawn::drainBattery(float drain) {
+	batteryLife -= drain;
+	if (batteryLife > 100) batteryLife = 100;
+	hudManager->bpSetBattery();
+
+	if (batteryLife < 0) {
+		if (coordsOn) toggleCompass();
+		if (flashLightOn) toggleLight();
+		if (this->FindFunction("PlayerDead")) {
+			const FString command = FString::Printf(TEXT("PlayerDead"));
+			FOutputDeviceNull od;
+			this->CallFunctionByNameWithArguments(*command, od, NULL, true);
+		}
 	}
 }
