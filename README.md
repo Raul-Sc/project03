@@ -8,13 +8,18 @@ Procedural Content:
 - Trees wer procedurally generated
 
 # Controls 
-a: turn left 
-d: turn right 
-w: move forward
-s: move backward
+A: turn left
+
+D: turn right 
+
+W: move forward
+
+S: move backward
 
 c: toggle compass
+
 f: toggle flashlight 
+
 r: clone battery
 
 # Download Notes
