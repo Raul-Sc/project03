@@ -16,11 +16,11 @@ W: move forward
 
 S: move backward
 
-c: toggle compass
+C: toggle compass
 
-f: toggle flashlight 
+F: toggle flashlight 
 
-r: clone battery
+R: clone battery
 
 # Download Notes
 
