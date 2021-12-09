@@ -255,15 +255,15 @@
 			]
 		},
 		{
-			"ShaderMapHash": "C3BD1E49A3AED13D1D7018CE57EA752B27C6F317",
-			"Assets": [
-				"/Game/Materials/50_2"
-			]
-		},
-		{
 			"ShaderMapHash": "59DC3C5E28449219738C81EA58E4AF04BB60C326",
 			"Assets": [
 				"/Game/Materials/Glow"
+			]
+		},
+		{
+			"ShaderMapHash": "C3BD1E49A3AED13D1D7018CE57EA752B27C6F317",
+			"Assets": [
+				"/Game/Materials/50_2"
 			]
 		},
 		{
