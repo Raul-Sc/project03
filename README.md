@@ -7,10 +7,16 @@ The robot also had the ability to make a clone of their battery ( clones a batte
 Procedural Content: 
 - Trees wer procedurally generated
 
+# Download Notes
+
+A build of the game can be found 
+
 # Controls 
 A: turn left
 
 D: turn right 
+
+* You can also just use the mouse for turning as well
 
 W: move forward
 
@@ -22,6 +28,4 @@ F: toggle flashlight
 
 R: clone battery
 
-# Download Notes
 
-if downloading whole project, lighting will need to be rebuilt as currently lighting map is far too big to add to github
