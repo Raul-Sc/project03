@@ -8,7 +8,7 @@ Procedural Content:
 - Trees wer procedurally generated
 
 # Download Notes
-To get a build of the game by downloading the StageBuilds folder. proj_03/Saved/StageBuilds/
+ 
 
 # Controls 
 A: turn left
