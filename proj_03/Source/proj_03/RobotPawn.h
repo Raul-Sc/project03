@@ -105,4 +105,5 @@ public:
 		void toggleLight();
 	UFUNCTION(BlueprintCallable)
 		void toggleStatus();
+	void updateUsed() { batteriesUsed++; }
 };

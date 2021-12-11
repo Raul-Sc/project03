@@ -48,6 +48,7 @@ void Aproj_03GameModeBase::spawnStuff() {
 void Aproj_03GameModeBase::spawnBattery() {
 	
 	if (player) {
+		player->updateUsed();
 		FVector location = player->GetActorLocation();
 		FRotator spawnRotation = player->GetActorRotation();
 		if (battery) {
