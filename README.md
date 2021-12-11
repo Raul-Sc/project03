@@ -1,11 +1,11 @@
 # project03
 Game Engine: UE4.27
 
-Abstract: Player is robot who needs to find way out of forest. They have a compass HUD which marks a way point and a flashlight. 
-The robot also had the ability to make a clone of their battery ( clones a battery with players current charge ), however this will teleport them back to the starting position.
+Abstract: Player is robot who needs to find way out of forest. They have a compass HUD, which marks a waypoint, and a flashlight. 
+The robot also has the ability to make a clone of their battery ( clones a battery with players current charge ), however this will teleport them back to the starting position.
 
 Procedural Content: 
-- Trees wer procedurally generated
+- Trees were procedurally generated
 
 # Download Notes
  Option 1: Download build zip from this link: 
