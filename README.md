@@ -12,7 +12,7 @@ Procedural Content:
  
 https://drive.google.com/drive/folders/1mSH9v62CFLT1t44ZQRGsN5Ut-FFay2j2?usp=sharing
  
- Step 1: Download
+ Step 1: Click Download All
  
  
  Step 2: Unzip and play
